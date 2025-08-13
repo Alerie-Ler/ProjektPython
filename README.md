@@ -1,54 +1,109 @@
-# Travel API
+# Trips API
 
-Prosty serwer FastAPI do zarządzania ofertami wycieczek oraz konwersji walut na podstawie danych z API NBP.
+## Spis treści
+
+* [Opis projektu](#opis-projektu)
+* [Wymagania](#wymagania)
+* [Instalacja i uruchomienie](#instalacja-i-uruchomienie)
+* [Endpointy API](#endpointy-api)
+* [Przykłady wywołań curl](#przykłady-wywołań-curl)
+* [Parametry](#parametry)
+* [Ograniczenia projektu](#ograniczenia-projektu)
 
 ---
 
-## 1. Instrukcja uruchomienia
+## Opis projektu
 
-### Wymagania
+Trips API to prosty serwis RESTowy do zarządzania wycieczkami.
+Obsługuje przechowywanie wycieczek w lokalnej bazie SQLite oraz konwersję cen wycieczek na różne waluty dzięki API Narodowego Banku Polskiego (NBP).
 
-- Python 3.8+
-- pip
+---
 
-### Instalacja zależności
+## Wymagania
+
+* Python 3.8+
+* FastAPI
+* requests
+* SQLite (wbudowany w Python)
+* narzędzie do uruchamiania ASGI np. `uvicorn`
+
+---
+
+## Instalacja i uruchomienie
+
+1. Sklonuj repozytorium lub skopiuj plik `main.py`.
+2. Zainstaluj zależności:
 
 ```bash
-pip install fastapi uvicorn requests pydantic
-````
+pip install fastapi uvicorn requests
+```
 
-### Uruchomienie serwera
+3. Uruchom serwer:
 
 ```bash
 uvicorn main:app --reload
 ```
 
-Gdzie `main.py` to plik z kodem aplikacji (dostosuj nazwę pliku według własnej struktury).
-
-### Baza danych
-
-* Baza SQLite `travel.db` zostanie utworzona automatycznie przy pierwszym uruchomieniu serwera.
-* Tabela `trips` zawiera kolumny: `id`, `destination`, `month`, `price_pln`.
+4. API dostępne jest pod adresem:
+   `http://127.0.0.1:8000`
 
 ---
 
-## 2. API - Endpoints i parametry
+## Endpointy API
 
-### `/health` (GET)
+| Metoda | Ścieżka              | Opis                                            |
+| ------ | -------------------- | ----------------------------------------------- |
+| GET    | /health              | Sprawdzenie statusu serwera                     |
+| POST   | /trips               | Dodanie nowej wycieczki                         |
+| GET    | /trips               | Lista wszystkich wycieczek (z konwersją waluty) |
+| GET    | /trips/{destination} | Pobranie wycieczki po celu (z konwersją waluty) |
+| GET    | /currency            | Pobranie kursu waluty z NBP                     |
+| GET    | /convert             | Przeliczenie kwoty PLN na podaną walutę         |
 
-Sprawdza, czy serwer działa.
+---
+
+## Przykłady wywołań curl
+
+### 1. Sprawdzenie statusu serwera
+
+```bash
+curl -X GET http://127.0.0.1:8000/health
+```
 
 **Odpowiedź:**
 
 ```json
-{ "status": "ok" }
+{"status":"ok"}
 ```
 
 ---
 
-### `/trips` (GET)
+### 2. Dodanie nowej wycieczki
 
-Pobiera listę wszystkich wycieczek.
+```bash
+curl -X POST http://127.0.0.1:8000/trips \
+ -H "Content-Type: application/json" \
+ -d '{"destination":"Paryż", "month":"Maj", "price_pln":1500.5}'
+```
+
+**Odpowiedź:**
+
+```json
+{
+  "id": 1,
+  "destination": "Paryż",
+  "month": "Maj",
+  "price_pln": 1500.5
+}
+```
+
+---
+
+### 3. Lista wycieczek w walucie EUR
+
+```bash
+curl -X GET "http://127.0.0.1:8000/trips?currency=EUR"
+```
 
 **Odpowiedź:**
 
@@ -56,165 +111,88 @@ Pobiera listę wszystkich wycieczek.
 [
   {
     "id": 1,
-    "destination": "Barcelona",
-    "month": "July",
-    "price_pln": 1500.0
-  },
-  ...
+    "destination": "Paryż",
+    "month": "Maj",
+    "price": 330.12,
+    "currency": "EUR"
+  }
 ]
 ```
 
 ---
 
-### `/trips` (POST)
+### 4. Pobranie wycieczki do Paryża w PLN
 
-Dodaje nową wycieczkę.
-
-**Body (JSON):**
-
-```json
-{
-  "destination": "Barcelona",
-  "month": "July",
-  "price_pln": 1500.0
-}
+```bash
+curl -X GET "http://127.0.0.1:8000/trips/Paryż?currency=PLN"
 ```
-
-**Walidacja:**
-
-* `destination`: nie może być puste,
-* `month`: nie może być puste,
-* `price_pln`: liczba >= 0.
-
-**Odpowiedź:**
-
-```json
-{ "message": "Trip added successfully" }
-```
-
----
-
-### `/trips/{destination}` (GET)
-
-Pobiera wycieczkę po nazwie `destination`.
-
-**Parametr URL:**
-`destination` - nazwa miejsca docelowego (np. Barcelona)
 
 **Odpowiedź:**
 
 ```json
 {
   "id": 1,
-  "destination": "Barcelona",
-  "month": "July",
-  "price_pln": 1500.0
+  "destination": "Paryż",
+  "month": "Maj",
+  "price": 1500.5,
+  "currency": "PLN"
 }
 ```
 
 ---
 
-### `/currency` (GET)
+### 5. Pobranie kursu waluty USD
 
-Pobiera aktualny kurs średni danej waluty względem PLN z API NBP.
+```bash
+curl -X GET "http://127.0.0.1:8000/currency?currency_code=USD"
+```
 
-**Parametry query:**
-`currency_code` — kod waluty, np. `USD`, `EUR`, `GBP`.
-Kody muszą być zgodne z listą NBP.
+**Odpowiedź:**
 
-**Odpowiedź (float):**
-Przykład: `4.5234`
+```json
+3.95
+```
 
 ---
 
-### `/convert` (GET)
+### 6. Konwersja kwoty 1000 PLN na USD
 
-Konwertuje kwotę z PLN na podaną walutę.
-
-**Parametry query:**
-
-* `pln` (float): kwota w PLN (>= 0),
-* `currency_code` (str): kod waluty docelowej.
+```bash
+curl -X GET "http://127.0.0.1:8000/convert?pln=1000&currency_code=USD"
+```
 
 **Odpowiedź:**
 
 ```json
 {
-  "amount_pln": 1000.0,
+  "amount_pln": 1000,
   "currency": "USD",
-  "converted_amount": 225.45
+  "converted_amount": 253.16
 }
 ```
 
 ---
 
-## 3. Przykłady wywołań CURL
+## Parametry
 
-### Pobranie statusu zdrowia serwera
-
-```bash
-curl http://127.0.0.1:8000/health
-```
-
----
-
-### Dodanie nowej wycieczki
-
-```bash
-curl -X POST http://127.0.0.1:8000/trips \
--H "Content-Type: application/json" \
--d '{"destination":"Barcelona", "month":"July", "price_pln":1500}'
-```
+* `currency` — kod waluty ISO 4217 (np. PLN, EUR, USD). Domyślnie `PLN`.
+* `destination` — nazwa celu podróży (ciąg znaków).
+* `month` — miesiąc wycieczki (ciąg znaków).
+* `price_pln` — cena wycieczki w PLN (liczba zmiennoprzecinkowa, >=0).
+* `pln` — kwota w złotówkach do konwersji (float, >=0).
+* `currency_code` — kod waluty do konwersji (ISO 4217).
 
 ---
 
-### Pobranie wszystkich wycieczek
+## Ograniczenia projektu
 
-```bash
-curl http://127.0.0.1:8000/trips
-```
-
----
-
-### Pobranie wycieczki po nazwie
-
-```bash
-curl http://127.0.0.1:8000/trips/Barcelona
-```
+* Ceny przechowywane są tylko w PLN w bazie SQLite.
+* Wyciek danych i błędy walidacji nie są w pełni zabezpieczone.
+* Brak paginacji i filtrowania wyników.
+* API NBP jest wykorzystywane bez cachowania, co może powodować spowolnienie.
+* Wyszukiwanie wycieczki po `destination` jest czułe na wielkość liter.
+* Brak autoryzacji i uwierzytelniania użytkowników.
 
 ---
 
-### Pobranie kursu waluty
-
-```bash
-curl "http://127.0.0.1:8000/currency?currency_code=USD"
-```
-
----
-
-### Konwersja PLN na inną walutę
-
-```bash
-curl "http://127.0.0.1:8000/convert?pln=1000&currency_code=USD"
-```
-
----
-
-## 4. Znane ograniczenia i uwagi
-
-* Baza danych SQLite jest prosta i nie jest przystosowana do środowisk produkcyjnych z dużą liczbą użytkowników i zapytań.
-* Walidacja kodów walut jest zależna od aktualnych danych z API NBP — mogą wystąpić ograniczenia lub zmiany w liście walut.
-* Timeout dla zapytań do API NBP jest ustawiony na 5 sekund.
-* Nie ma autoryzacji użytkowników — API jest otwarte.
-* Pole `month` przyjmuję dowolny tekst — brak walidacji, czy to rzeczywiście nazwa miesiąca.
-* Brak paginacji dla endpointu `/trips`.
-
----
-
-## 5. Kontakt / wsparcie
-
-W razie pytań lub problemów, proszę o kontakt.
-
----
-
-# Powodzenia! 🚀
+Masz pytania lub chcesz rozbudować projekt? Chętnie pomogę!
