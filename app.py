@@ -2,17 +2,13 @@ from fastapi import FastAPI, HTTPException
 
 from pydantic import BaseModel
 
-
-
+import requests
 
 import json
-
-import requests
 
 import sqlite3
 
 app = FastAPI()
-
 
 conn = sqlite3.connect("travel.db", check_same_thread=False)
 conn.row_factory = sqlite3.Row
@@ -87,10 +83,7 @@ def convert_currency(pln: float, currency_code: str):
         "converted_amount": round(converted, 2)
     }
 
-
-
 @app.get("/health")
 def read_health():
     return {"status": "ok"}
 
-if __name__ == '__main__':
