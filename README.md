@@ -1,19 +1,5 @@
 Trips API
-Spis treści
 
-    Opis projektu
-
-    Wymagania
-
-    Instalacja i uruchomienie
-
-    Endpointy API
-
-    Przykłady wywołań curl
-
-    Parametry
-
-    Ograniczenia projektu
 
 Opis projektu
 
