@@ -1,7 +1,6 @@
 
 from fastapi import FastAPI, HTTPException, status, Query
-from pydantic import BaseModel, validator
-from typing import Dict
+from pydantic import BaseModel
 
 
 import requests
@@ -44,7 +43,7 @@ def read_health():
 
 def add_trip(destination, month, price_pln):
     try:
-        cur.execute("INSERT INTO trips (destination, month, price) VALUES (?, ?, ?)",(destination, month, price_pln))
+        cur.execute("INSERT INTO trips (destination, month, price_pln) VALUES (?, ?, ?)",(destination, month, price_pln))
         conn.commit()
         return cur.lastrowid
     except sqlite3.Error as e:
