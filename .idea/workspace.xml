@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="efa67411-6c08-42fe-ac4e-868fb8da9cab" name="Changes" comment="Utworzenie bazy danych">
+    <list default="true" id="efa67411-6c08-42fe-ac4e-868fb8da9cab" name="Changes" comment="Integracja z API NBP">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
     </list>
@@ -90,7 +90,7 @@
       <option name="presentableId" value="Default" />
       <updated>1754998151827</updated>
       <workItem from="1754998152842" duration="3028000" />
-      <workItem from="1755077163148" duration="5729000" />
+      <workItem from="1755077163148" duration="6328000" />
     </task>
     <task id="LOCAL-00001" summary="added a+b">
       <option name="closed" value="true" />
@@ -108,7 +108,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755010728519</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Integracja z API NBP">
+      <option name="closed" value="true" />
+      <created>1755084439921</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1755084439921</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -140,7 +148,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added a+b" />
     <MESSAGE value="Utworzenie bazy danych" />
-    <option name="LAST_COMMIT_MESSAGE" value="Utworzenie bazy danych" />
+    <MESSAGE value="Integracja z API NBP" />
+    <option name="LAST_COMMIT_MESSAGE" value="Integracja z API NBP" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Project_GIT$app.coverage" NAME="app Coverage Results" MODIFIED="1755009795882" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

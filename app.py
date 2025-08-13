@@ -18,6 +18,11 @@ conn = sqlite3.connect("travel.db", check_same_thread=False)
 conn.row_factory = sqlite3.Row
 cur = conn.cursor()
 
+class Trip(BaseModel):
+    destination: str
+    month: str
+    price_pln: float
+
 def initialize_database():
     cur.execute("""
         CREATE TABLE IF NOT EXISTS trips (
@@ -29,18 +34,29 @@ def initialize_database():
         """)
     conn.commit()
 
+initialize_database()
+
 def add_trip(destination, month, price_pln):
-    cur.execute("INSERT INTO trips (destination, month, price) VALUES (?, ?, ?)",(destination, month, price_pln))
-    conn.commit()
-    return
+    try:
+        cur.execute("INSERT INTO trips (destination, month, price) VALUES (?, ?, ?)",(destination, month, price_pln))
+        conn.commit()
+        return
+    except sqlite3.Error as e:
+        raise HTTPException(status_code=400, detail=f"Database error: {str(e)}")
 
 def read_trips():
-    cur.execute("SELECT * FROM trips")
-    return cur.fetchall()
+    try:
+        cur.execute("SELECT * FROM trips")
+        return cur.fetchall()
+    except sqlite3.Error as e:
+        raise HTTPException(status_code=400, detail=f"Database error: {str(e)}")
 
 def read_trip(destination: str):
-    cur.execute("SELECT * FROM trips WHERE destination = ?", (destination,))
-    return cur.fetchone()
+    try:
+        cur.execute("SELECT * FROM trips WHERE destination = ?", (destination,))
+        return cur.fetchone()
+    except sqlite3.Error as e:
+        raise HTTPException(status_code=400, detail=f"Database error: {str(e)}")
 
 @app.get("/currency")
 def get_currency(currency_code: str):
@@ -53,12 +69,16 @@ def get_currency(currency_code: str):
         for rate in rates:
             if rate['code'].upper() == currency_code.upper():
                 return rate['mid']
-        raise ValueError(f"Nieobsługiwany kod waluty: {currency_code}")
+        raise HTTPException(status_code=400, detail=f"Unsupported currency code: {currency_code}")
+    except requests.Timeout:
+        raise HTTPException(status_code=400, detail="NBP API request timed out")
     except requests.RequestException as e:
-        return HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=400, detail=f"NBP API error: {str(e)}")
 
 @app.get("/convert")
 def convert_currency(pln: float, currency_code: str):
+    if pln < 0:
+        raise HTTPException(status_code=422, detail="pln amount must be non-negative")
     rate = get_currency(currency_code)
     converted = pln / rate
     return {
@@ -74,4 +94,3 @@ def read_health():
     return {"status": "ok"}
 
 if __name__ == '__main__':
-    app.run(debug=True)
