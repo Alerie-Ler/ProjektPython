@@ -2,14 +2,11 @@
 from fastapi import FastAPI, HTTPException, status, Query
 from pydantic import BaseModel
 
-
 import requests
 
 import json
 
-
 import sqlite3
-
 
 app = FastAPI(title="Trips API", version="1.0.0")
 
@@ -21,7 +18,6 @@ class Trip(BaseModel):
     destination: str
     month: str
     price_pln: float
-
 
 def initialize_database():
     cur.execute("""
@@ -39,7 +35,6 @@ initialize_database()
 @app.get("/health")
 def read_health():
     return {"status": "ok"}
-
 
 def add_trip(destination, month, price_pln):
     try:
@@ -80,8 +75,6 @@ def get_currency(currency_code: str):
     except requests.RequestException as e:
         raise HTTPException(status_code=400, detail=f"NBP API error: {str(e)}")
 
-
-
 @app.post("/trips", status_code=status.HTTP_201_CREATED)
 def create_trip(trip: Trip):
     trip_id = add_trip(trip.destination, trip.month, trip.price_pln)
@@ -99,6 +92,7 @@ def list_trips(currency: str = Query("PLN", description="Kod waluty (np. PLN)"))
         trip_data["currency"] = currency.upper()
         result.append(trip_data)
     return result
+    
 @app.get("/trips/{destination}")
 def get_trip(destination: str, currency: str = Query("PLN", description="Kod waluty (np. PLN)")):
     trip = read_trip(destination)
