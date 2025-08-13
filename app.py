@@ -60,6 +60,8 @@ def read_trip(destination: str):
 
 @app.get("/currency")
 def get_currency(currency_code: str):
+    if currency_code.upper() == "PLN":
+        return 1.0
     url = "https://api.nbp.pl/api/exchangerates/tables/A?format=json"
     try:
         response = requests.get(url)
