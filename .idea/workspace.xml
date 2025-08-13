@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="efa67411-6c08-42fe-ac4e-868fb8da9cab" name="Changes" comment="added a+b">
-      <change afterPath="$PROJECT_DIR$/travel.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Project GIT.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Project GIT.iml" afterDir="false" />
+    <list default="true" id="efa67411-6c08-42fe-ac4e-868fb8da9cab" name="Changes" comment="Utworzenie bazy danych">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
     </list>
@@ -31,6 +29,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Alerie-Ler"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Alerie-Ler/ProjektPython.git",
+    "accountId": "f1329809-edd5-4daa-8b59-abfd1c6cfc41"
+  }
+}]]></component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/.venv/.gitignore" root0="SKIP_INSPECTION" />
   </component>
@@ -48,6 +58,7 @@
     "Python.app.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "Dev-A",
+    "last_opened_file_path": "Z:/Dara/API.py",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -79,6 +90,7 @@
       <option name="presentableId" value="Default" />
       <updated>1754998151827</updated>
       <workItem from="1754998152842" duration="3028000" />
+      <workItem from="1755077163148" duration="5729000" />
     </task>
     <task id="LOCAL-00001" summary="added a+b">
       <option name="closed" value="true" />
@@ -88,7 +100,15 @@
       <option name="project" value="LOCAL" />
       <updated>1754999276341</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Utworzenie bazy danych">
+      <option name="closed" value="true" />
+      <created>1755010728519</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1755010728519</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -119,7 +139,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added a+b" />
-    <option name="LAST_COMMIT_MESSAGE" value="added a+b" />
+    <MESSAGE value="Utworzenie bazy danych" />
+    <option name="LAST_COMMIT_MESSAGE" value="Utworzenie bazy danych" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Project_GIT$app.coverage" NAME="app Coverage Results" MODIFIED="1755009795882" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
