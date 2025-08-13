@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="efa67411-6c08-42fe-ac4e-868fb8da9cab" name="Changes" comment="Walidacje i obsługa błędów" />
+    <list default="true" id="efa67411-6c08-42fe-ac4e-868fb8da9cab" name="Changes" comment="Finish" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -129,7 +129,15 @@
       <option name="project" value="LOCAL" />
       <updated>1755088864476</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Finish">
+      <option name="closed" value="true" />
+      <created>1755089316400</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1755089316400</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,7 +171,8 @@
     <MESSAGE value="Utworzenie bazy danych" />
     <MESSAGE value="Integracja z API NBP" />
     <MESSAGE value="Walidacje i obsługa błędów" />
-    <option name="LAST_COMMIT_MESSAGE" value="Walidacje i obsługa błędów" />
+    <MESSAGE value="Finish" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finish" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Project_GIT$app.coverage" NAME="app Coverage Results" MODIFIED="1755009795882" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
