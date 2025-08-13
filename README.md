@@ -218,8 +218,3 @@ W razie pytań lub problemów, proszę o kontakt.
 ---
 
 # Powodzenia! 🚀
-
-
-
-Chcesz, mogę wygenerować plik README.md lub pomóc z automatycznymi testami?
-```
